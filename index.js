@@ -4,6 +4,7 @@ const ctx = canvas.getContext("2d");
 
 const blockSize = 20;
 let loopId, fruit;
+let score = 0;
 let interval = 250;
 let direction = "right";
 let gameRunning = false;
@@ -51,6 +52,10 @@ document.addEventListener("keydown", (e) => {
 function draw() {
   ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 
+  ctx.font = "80px monospace";
+  ctx.textAlign = "center";
+  ctx.strokeStyle = "#999";
+  ctx.strokeText(`${score}`, 40, 570, 200);
   if (fruit) {
     ctx.fillStyle = "#FF3333";
     ctx.fillRect(fruit.x, fruit.y, blockSize, blockSize);
@@ -119,12 +124,14 @@ function stopGame() {
   clearInterval(loopId);
   fruit = undefined;
   draw();
+  score = 0;
 }
 
 function checkFruit() {
   let head = snake[snake.length - 1];
 
   if (head.x === fruit.x && head.y === fruit.y) {
+    score++;
     snake.unshift({ x: -20, y: -20 });
     newFruit();
     interval = interval - interval * 0.07;
