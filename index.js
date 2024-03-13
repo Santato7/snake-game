@@ -49,7 +49,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 function draw() {
-  ctx.clearRect(0, 0, 600, 600);
+  ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 
   if (fruit) {
     ctx.fillStyle = "#FF3333";
@@ -89,13 +89,13 @@ function moveSnake() {
   }
 
   snake.shift();
+  checkColision();
 }
 
 function gameLoop() {
   clearInterval(loopId);
   moveSnake();
   checkFruit();
-  // newFruit();
   draw();
 
   loopId = setInterval(() => {
@@ -104,6 +104,11 @@ function gameLoop() {
 }
 
 function startGame() {
+  snake = [
+    { x: 20, y: 20 },
+    { x: 40, y: 20 },
+  ];
+  direction = "right";
   gameRunning = true;
   newFruit();
   gameLoop();
@@ -112,10 +117,6 @@ function startGame() {
 function stopGame() {
   gameRunning = false;
   clearInterval(loopId);
-  snake = [
-    { x: 20, y: 20 },
-    { x: 40, y: 20 },
-  ];
   fruit = undefined;
   draw();
 }
@@ -126,7 +127,24 @@ function checkFruit() {
   if (head.x === fruit.x && head.y === fruit.y) {
     snake.unshift({ x: -20, y: -20 });
     newFruit();
-    interval = interval - interval * 0.1;
+    interval = interval - interval * 0.07;
+  }
+}
+
+function checkColision() {
+  let head = snake[snake.length - 1];
+
+  for (let i = 0; i < snake.length - 1; i++) {
+    if (head.x === snake[i].x && head.y === snake[i].y) {
+      stopGame();
+    }
+  }
+
+  if (head.x < 0 || head.x > canvas.clientWidth) {
+    stopGame();
+  }
+  if (head.y < 0 || head.y > canvas.clientHeight) {
+    stopGame();
   }
 }
 
