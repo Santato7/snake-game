@@ -5,7 +5,7 @@ const ctx = canvas.getContext("2d");
 const blockSize = 20;
 let loopId, fruit;
 let score = 0;
-let interval = 250;
+let interval = 210;
 let direction = "right";
 let gameRunning = false;
 let snake = [
@@ -117,6 +117,7 @@ function startGame() {
   gameRunning = true;
   newFruit();
   gameLoop();
+  instructionElement.style.display = "none";
 }
 
 function stopGame() {
@@ -126,6 +127,7 @@ function stopGame() {
   draw();
   score = 0;
   interval = 250;
+  instructionElement.style.display = "block";
 }
 
 function checkFruit() {
@@ -156,4 +158,18 @@ function checkColision() {
   }
 }
 
+function displayInstructions() {
+  let instructions =
+    "Press space to start and use the arrow keys to move the snake. Press Esc to stop the game.";
+  instructionElement = document.createElement("div");
+  instructionElement.style.position = "absolute";
+  instructionElement.style.top = "50%";
+  instructionElement.style.left = "50%";
+  instructionElement.style.transform = "translate(-50%, -50%)";
+  instructionElement.style.textAlign = "center";
+  instructionElement.textContent = instructions;
+  document.body.appendChild(instructionElement);
+}
+
 draw();
+displayInstructions();
