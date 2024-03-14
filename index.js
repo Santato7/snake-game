@@ -125,6 +125,7 @@ function stopGame() {
   fruit = undefined;
   draw();
   score = 0;
+  interval = 250;
 }
 
 function checkFruit() {
