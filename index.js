@@ -159,9 +159,9 @@ function checkColision() {
 }
 
 function displayInstructions() {
-  let instructions =
-    "Press space to start and use the arrow keys to move the snake. Press Esc to stop the game.";
+  let instructions = `Press 'space' to start and use the arrow keys to move the snake. Press 'Esc' to stop the game.`;
   instructionElement = document.createElement("div");
+  instructionElement.style.width = "400px";
   instructionElement.style.position = "absolute";
   instructionElement.style.top = "50%";
   instructionElement.style.left = "50%";
